@@ -1,0 +1,31 @@
+/* highlight.css → ใช้ใน content_scripts เท่านั้น */
+.__multi_highlight__ {
+  font-weight: bold;
+  border-radius: 2px;
+  padding: 0 2px;
+  display: inline-block !important;
+  position: relative !important;
+  z-index: 999999 !important;
+}
+
+/* Highlight colors */
+.highlight-yellow { background-color: #ffff00 !important; color: #000 !important; }
+.highlight-green { background-color: #4caf50 !important; color: #fff !important; }
+.highlight-red { background-color: #f44336 !important; color: #fff !important; }
+.highlight-blue { background-color: #2196f3 !important; color: #fff !important; }
+.highlight-orange { background-color: #ff9800 !important; color: #000 !important; }
+.highlight-purple { background-color: #9c27b0 !important; color: #fff !important; }
+.highlight-pink { background-color: #e91e63 !important; color: #fff !important; }
+.highlight-cyan { background-color: #00bcd4 !important; color: #fff !important; }
+.highlight-teal { background-color: #009688 !important; color: #fff !important; }
+.highlight-brown { background-color: #795548 !important; color: #fff !important; }
+.highlight-gray { background-color: #9e9e9e !important; color: #000 !important; }
+.highlight-black { background-color: #000000 !important; color: #fff !important; }
+.highlight-white { background-color: #ffffff !important; color: #000 !important; border: 1px solid #ccc !important; }
+.highlight-indigo { background-color: #3f51b5 !important; color: #fff !important; }
+.highlight-lime { background-color: #cddc39 !important; color: #000 !important; }
+.highlight-amber { background-color: #ffc107 !important; color: #000 !important; }
+.highlight-deep-orange { background-color: #ff5722 !important; color: #fff !important; }
+.highlight-deep-purple { background-color: #673ab7 !important; color: #fff !important; }
+.highlight-light-blue { background-color: #03a9f4 !important; color: #fff !important; }
+.highlight-light-green { background-color: #8bc34a !important; color: #000 !important; }

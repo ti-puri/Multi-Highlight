@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "Multi Highlight",
+  "description": "Highlight multiple words on webpages in real-time.",
+  "version": "1.0",
+  "permissions": ["storage", "scripting", "activeTab", "tabs"],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["mark.min.js", "content.js"],
+      "css": ["style.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ]
+}

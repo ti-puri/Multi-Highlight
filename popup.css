@@ -1,0 +1,110 @@
+/* popup.css → ใช้กับ popup.html เท่านั้น */
+body {
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f9fafc;
+  color: #333;
+  width: 280px;
+}
+
+.popup-container {
+  padding: 12px;
+}
+
+/* Title */
+h2 {
+  font-size: 16px;
+  margin: 0 0 10px;
+  color: #1976d2;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* Label */
+.label {
+  font-size: 12px;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 4px;
+  color: #444;
+}
+
+/* Textarea */
+textarea {
+  width: 100%;
+  height: 60px;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  resize: none;
+  background: #fff;
+  font-size: 12px;
+  box-sizing: border-box;
+}
+
+/* Summary */
+.summary-box {
+  margin-top: 10px;
+  padding: 8px;
+  font-size: 12px;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  max-height: 160px;
+  overflow-y: auto;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.summary-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+}
+.summary-item input {
+  margin-right: 6px;
+}
+
+.summary-label span {
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 11px;
+}
+
+/* Button group */
+.btn-group {
+  display: flex;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+#highlightBtn,
+#clearBtn {
+  flex: 1;
+  padding: 8px;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background 0.3s;
+}
+
+/* ปุ่มค้นหา */
+#highlightBtn {
+  background: linear-gradient(135deg, #42a5f5, #1976d2);
+  color: #fff;
+}
+#highlightBtn:hover {
+  background: linear-gradient(135deg, #64b5f6, #1565c0);
+}
+
+/* ปุ่มยกเลิก */
+#clearBtn.cancel {
+  background: #f44336;
+  color: #fff;
+}
+#clearBtn.cancel:hover {
+  background: #d32f2f;
+}
