@@ -2,24 +2,21 @@ console.log("🚀 Multi Highlight content.js loaded");
 
 let lastWordsJSON = "";
 
-// 🔹 ฟังก์ชันลบ highlight ทั้งหมด
+// 🔹 ลบ highlight ทั้งหมด
 function removeHighlights() {
   const markInstance = new Mark(document.body);
   markInstance.unmark();
-  chrome.storage.sync.set({ highlightSummary: {} });
   lastWordsJSON = "";
 }
 
-// 🔹 ฟังก์ชัน highlight คำ
+// 🔹 highlight คำ
 function highlightWords(words) {
-  const activeWords = (words || []).filter(item => item.word && item.enabled !== false);
-
-  if (activeWords.length === 0) {
+  if (!Array.isArray(words) || words.length === 0) {
     removeHighlights();
     return;
   }
 
-  const currentJSON = JSON.stringify(activeWords);
+  const currentJSON = JSON.stringify(words);
   if (currentJSON === lastWordsJSON) return; // กัน highlight ซ้ำ
   lastWordsJSON = currentJSON;
 
@@ -29,7 +26,7 @@ function highlightWords(words) {
   let results = {};
   let doneCount = 0;
 
-  activeWords.forEach(({ word, color }) => {
+  words.forEach(({ word, color }) => {
     const styleClass = "__multi_highlight__ " + (color || "highlight-yellow");
 
     markInstance.mark(word, {
@@ -41,26 +38,18 @@ function highlightWords(words) {
       done: (count) => {
         results[word] = { count, styleClass: color };
         doneCount++;
-        if (doneCount === activeWords.length) {
-          chrome.storage.sync.set({ highlightSummary: results });
+        if (doneCount === words.length) {
+          // ✅ ส่ง summary กลับไป popup.js
+          chrome.runtime.sendMessage({ action: "updateSummary", summary: results });
         }
       }
     });
   });
 }
 
-// ✅ auto refresh เมื่อมีการเปลี่ยน wordList
-chrome.storage.onChanged.addListener((changes, area) => {
-  if (area === "sync" && changes.wordList) {
-    highlightWords(changes.wordList.newValue || []);
-  }
-});
-
-// ✅ auto run highlight เมื่อโหลดเว็บ
-chrome.storage.sync.get(["wordList"], (data) => {
-  if (Array.isArray(data.wordList) && data.wordList.length > 0) {
-    highlightWords(data.wordList);
-  } else {
-    removeHighlights();
+// ✅ ฟัง message จาก popup.js
+chrome.runtime.onMessage.addListener((msg) => {
+  if (msg.action === "highlightWords") {
+    highlightWords(msg.words);
   }
 });
