@@ -17,7 +17,7 @@ function highlightWords(words) {
   }
 
   const currentJSON = JSON.stringify(words);
-  if (currentJSON === lastWordsJSON) return; // กัน highlight ซ้ำ
+  if (currentJSON === lastWordsJSON) return;
   lastWordsJSON = currentJSON;
 
   removeHighlights();
@@ -26,25 +26,33 @@ function highlightWords(words) {
   let results = {};
   let doneCount = 0;
 
-  words.forEach(({ word, color }) => {
-    const styleClass = "__multi_highlight__ " + (color || "highlight-yellow");
+  words.forEach(({ word, color, meaning }) => {
+  const styleClass = "__multi_highlight__ " + (color || "highlight-yellow");
 
-    markInstance.mark(word, {
-      separateWordSearch: false,
-      caseSensitive: false,
-      className: styleClass,
-      acrossElements: true,
-      iframes: true,
-      done: (count) => {
-        results[word] = { count, styleClass: color };
-        doneCount++;
-        if (doneCount === words.length) {
-          // ✅ ส่ง summary กลับไป popup.js
-          chrome.runtime.sendMessage({ action: "updateSummary", summary: results });
-        }
+  markInstance.mark(word, {
+    separateWordSearch: false,
+    caseSensitive: false,
+    className: styleClass,
+    acrossElements: true,
+    iframes: true,
+    each: (element) => {
+      if (meaning) {
+        element.setAttribute("title", `หมวดหมู่: ${meaning}`);
+      } else {
+        element.setAttribute("title", `Keyword: ${word}`);
       }
-    });
+    },
+    done: (count) => {
+      // ✅ ส่ง meaning ออกไปด้วย
+      results[word] = { count, styleClass: color, meaning };
+      doneCount++;
+      if (doneCount === words.length) {
+        chrome.runtime.sendMessage({ action: "updateSummary", summary: results });
+      }
+    }
   });
+});
+
 }
 
 // ✅ ฟัง message จาก popup.js

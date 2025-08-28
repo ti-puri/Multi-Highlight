@@ -10,7 +10,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     const codes = (data.data || []).map(item => ({
       word: item.code,
       color: item.color || "highlight-yellow",
-      enabled: true // ✅ เปิดใช้งานทันที
+      meaning: item.meaning || "",   // ✅ ใช้ meaning แทน note
+      enabled: true
     }));
 
     console.log("✅ Codes from API:", codes);
@@ -39,16 +40,24 @@ document.addEventListener("DOMContentLoaded", async () => {
     const keys = Object.keys(summary);
 
     keys.forEach(word => {
-      const { count, styleClass } = summary[word];
+      const { count, styleClass, meaning } = summary[word];
       const wrapper = document.createElement("div");
       wrapper.className = "summary-item";
 
       const label = document.createElement("span");
       label.className = "summary-label";
-      label.innerHTML = `<span class="${styleClass}" 
-                          style="padding:2px 4px;border-radius:3px;font-weight:bold;">
-                          ${word}
-                        </span> : ${count}`;
+
+      // ✅ แสดง word + meaning + count
+      label.innerHTML = `
+        <span class="${styleClass}" 
+          style="padding:2px 4px;border-radius:3px;font-weight:bold;">
+          ${word}
+        </span>
+        <span style="color:#888; margin-left:6px;">
+          (${meaning || "-"})
+        </span>
+        : ${count}
+      `;
 
       wrapper.appendChild(label);
       summaryDiv.appendChild(wrapper);
